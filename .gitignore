@@ -46,7 +46,6 @@ project.fragment.lock.json
 artifacts/
 
 #  The additional SDL dlls that clutter up the space
-*.dll
 
 *_i.c
 *_p.c

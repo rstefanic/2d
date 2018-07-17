@@ -1,7 +1,13 @@
 #include "Game.h"
+#include "TextureManager.h"
+#include "GameObject.h"
+#include "Map.h"
 
-SDL_Texture* playerTex;
-SDL_Rect srcR, destR;
+GameObject* p;
+GameObject* p2;
+Map* map;
+
+SDL_Renderer* Game::renderer = nullptr;
 
 Game::Game()
 {
@@ -37,25 +43,23 @@ void Game::init(const char *title, int x, int y,
 		this->isRunning = false;
 	}
 
-	SDL_Surface* tmpSurface = IMG_Load("Assets/happy.png");
-	playerTex = SDL_CreateTextureFromSurface(renderer, tmpSurface);
-	SDL_FreeSurface(tmpSurface);
+	p = new GameObject("assets/happy.png", 0, 0);
+	p2 = new GameObject("assets/happy.png", 50, 50);
+	map = new Map();
 }
 
 void Game::update() 
 {
-	this->counter++;
-	destR.h = 64;
-	destR.w = 64;
-	destR.x = counter / 4;
-
-	std::cout << counter << std::endl;
+	p->Update();
+	p2->Update();
 }
 
 void Game::render()
 {
-	SDL_RenderClear(this->renderer);
-	SDL_RenderCopy(renderer, playerTex, NULL, &destR);
+	SDL_RenderClear(renderer);
+	map->DrawMap();
+	p->Render();
+	p2->Render();
 	SDL_RenderPresent(this->renderer);
 }
 
